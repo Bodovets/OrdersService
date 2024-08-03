@@ -46,7 +46,7 @@ class OrdersControllerTests(@LocalServerPort val port: Int, @Autowired val restT
         )
 
         val expectedTotalCost = 2 * 0.60 + 3 * 0.25
-        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(HttpStatus.CREATED, response.statusCode)
         assertEquals(36, response.body?.orderId?.length)
         assertEquals(expectedTotalCost, response.body?.totalPrice)
     }

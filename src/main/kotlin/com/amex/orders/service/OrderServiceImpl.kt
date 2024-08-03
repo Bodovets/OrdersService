@@ -10,6 +10,8 @@ import com.amex.orders.offer.ThreeForTwoOffer
 import com.amex.orders.repository.OrderRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 @Service
@@ -35,6 +37,7 @@ class OrderServiceImpl @Autowired constructor(
             val totalItemPrice = offers[itemName]?.apply(item.quantity, price) ?: (item.quantity * price)
             totalPrice += totalItemPrice
         }
+        totalPrice = BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_EVEN).toDouble()
         val orderSummary = OrderSummary(orderId, orderItems, totalPrice)
         orderRepo.save(orderSummary)
         return orderSummary
