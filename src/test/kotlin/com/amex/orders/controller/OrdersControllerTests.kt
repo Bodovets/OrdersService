@@ -1,6 +1,7 @@
 package com.amex.orders.controller
 
 import com.amex.orders.model.OrderItem
+import com.amex.orders.model.OrderRequest
 import com.amex.orders.model.OrderSummary
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -18,9 +19,10 @@ class OrdersControllerTests(@LocalServerPort val port: Int, @Autowired val restT
     @Test
     fun `should create order and return summary`() {
         val orderItems = listOf(OrderItem("apple", 2), OrderItem("orange", 3))
+        val orderRequest = OrderRequest(orderItems)
         val headers = HttpHeaders()
         headers.set("Content-Type", "application/json")
-        val entity = HttpEntity(orderItems, headers)
+        val entity = HttpEntity(orderRequest, headers)
 
         val response = restTemplate.exchange(
             "http://localhost:$port/order",
@@ -38,9 +40,10 @@ class OrdersControllerTests(@LocalServerPort val port: Int, @Autowired val restT
     @Test
     fun `should return bad request for unknown product`() {
         val orderItems = listOf(OrderItem("unknown", 1))
+        val orderRequest = OrderRequest(orderItems)
         val headers = HttpHeaders()
         headers.set("Content-Type", "application/json")
-        val entity = HttpEntity(orderItems, headers)
+        val entity = HttpEntity(orderRequest, headers)
 
         val response = restTemplate.exchange(
             "http://localhost:$port/order",
