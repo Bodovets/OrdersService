@@ -18,7 +18,7 @@ class OrderServiceImplTests {
         val orderItems = listOf(OrderItem("apple", 3), OrderItem("orange", 3))
         val orderSummary = orderService.createOrder(orderItems)
 
-        val expectedTotalCost = 2 * 0.60 + 3 * 0.25
+        val expectedTotalCost = 2 * 0.60 + 2 * 0.25
         assertEquals(orderItems, orderSummary.items)
         assertEquals(expectedTotalCost, orderSummary.totalPrice)
     }
@@ -28,7 +28,7 @@ class OrderServiceImplTests {
         val orderItems = listOf(OrderItem("apple", 2), OrderItem("orange", 3))
         val orderSummary = orderService.createOrder(orderItems)
 
-        val expectedTotalCost = 1 * 0.60 + 3 * 0.25
+        val expectedTotalCost = 1 * 0.60 + 2 * 0.25
         assertEquals(orderItems, orderSummary.items)
         assertEquals(expectedTotalCost, orderSummary.totalPrice)
     }

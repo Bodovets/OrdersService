@@ -4,6 +4,7 @@ import com.amex.orders.exception.ProductNotFoundException
 import com.amex.orders.model.OrderItem
 import com.amex.orders.model.OrderSummary
 import com.amex.orders.offer.BuyOneGetOneFreeOffer
+import com.amex.orders.offer.ThreeForTwoOffer
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -15,7 +16,8 @@ class OrderServiceImpl() : OrderService {
     )
 
     private val offers = mapOf(
-        "apple" to BuyOneGetOneFreeOffer()
+        "apple" to BuyOneGetOneFreeOffer(),
+        "orange" to ThreeForTwoOffer()
     )
 
     override fun createOrder(orderItems: List<OrderItem>): OrderSummary {
