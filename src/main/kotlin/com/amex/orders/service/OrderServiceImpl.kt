@@ -3,6 +3,8 @@ package com.amex.orders.service
 import com.amex.orders.exception.ProductNotFoundException
 import com.amex.orders.model.OrderItem
 import com.amex.orders.model.OrderSummary
+import com.amex.orders.offer.BuyOneGetOneFreeOffer
+import com.amex.orders.offer.ThreeForTwoOffer
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -13,15 +15,21 @@ class OrderServiceImpl : OrderService {
         "orange" to 0.25
     )
 
+    private val offers = mapOf(
+        "apple" to BuyOneGetOneFreeOffer(),
+        "orange" to ThreeForTwoOffer()
+    )
+
     override fun createOrder(orderItems: List<OrderItem>): OrderSummary {
         val orderId = UUID.randomUUID().toString()
-        val totalPrice = orderItems.sumOf { it.calculateCost() }
+        var totalPrice = 0.0
+        for (item in orderItems) {
+            val itemName = item.name.lowercase()
+            val price = pricingMap[itemName] ?: throw ProductNotFoundException(item.name)
+            val totalItemPrice = offers[itemName]?.apply(item.quantity, price) ?: (item.quantity * price)
+            totalPrice += totalItemPrice
+        }
 
         return OrderSummary(orderId, orderItems, totalPrice)
-    }
-
-    private fun OrderItem.calculateCost(): Double {
-        return pricingMap[this.name.lowercase()]?.let { price -> price * this.quantity }
-            ?: throw ProductNotFoundException(this.name)
     }
 }

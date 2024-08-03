@@ -15,10 +15,20 @@ class OrderServiceImplTests {
 
     @Test
     fun `should calculate total cost correctly for valid order`() {
+        val orderItems = listOf(OrderItem("apple", 3), OrderItem("orange", 3))
+        val orderSummary = orderService.createOrder(orderItems)
+
+        val expectedTotalCost = 2 * 0.60 + 2 * 0.25
+        assertEquals(orderItems, orderSummary.items)
+        assertEquals(expectedTotalCost, orderSummary.totalPrice)
+    }
+
+    @Test
+    fun `should calculate total cost correctly for valid order with active offer for b1g1 free`() {
         val orderItems = listOf(OrderItem("apple", 2), OrderItem("orange", 3))
         val orderSummary = orderService.createOrder(orderItems)
 
-        val expectedTotalCost = 2 * 0.60 + 3 * 0.25
+        val expectedTotalCost = 1 * 0.60 + 2 * 0.25
         assertEquals(orderItems, orderSummary.items)
         assertEquals(expectedTotalCost, orderSummary.totalPrice)
     }
