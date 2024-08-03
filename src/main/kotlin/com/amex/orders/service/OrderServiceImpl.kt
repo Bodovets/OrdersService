@@ -1,5 +1,6 @@
 package com.amex.orders.service
 
+import com.amex.orders.exception.OrderNotFoundException
 import com.amex.orders.exception.ProductNotFoundException
 import com.amex.orders.model.OrderItem
 import com.amex.orders.model.OrderSummary
@@ -37,5 +38,9 @@ class OrderServiceImpl @Autowired constructor(
         val orderSummary = OrderSummary(orderId, orderItems, totalPrice)
         orderRepo.save(orderSummary)
         return orderSummary
+    }
+
+    override fun getOrderSummary(orderId: String): OrderSummary {
+        return orderRepo.findById(orderId) ?: throw OrderNotFoundException(orderId)
     }
 }
