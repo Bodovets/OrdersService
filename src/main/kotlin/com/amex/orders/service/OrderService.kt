@@ -5,4 +5,6 @@ import com.amex.orders.model.OrderSummary
 
 interface OrderService {
     fun createOrder(orderItems: List<OrderItem>): OrderSummary
+    fun getOrderSummary(orderId: String): OrderSummary
+    fun getAllOrders(): List<OrderSummary>
 }
