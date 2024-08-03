@@ -1,3 +1,7 @@
 package com.amex.orders.model
 
-data class OrderRequest(val items: List<OrderItem>)
+import jakarta.validation.Valid
+
+data class OrderRequest(
+    @field:Valid val items: List<OrderItem>
+)
