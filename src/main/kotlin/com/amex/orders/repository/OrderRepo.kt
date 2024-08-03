@@ -19,4 +19,8 @@ class OrderRepo {
     fun findAll(): List<OrderSummary> {
         return orders.values.toList()
     }
+
+    fun deleteAll() {
+        orders.clear()
+    }
 }
