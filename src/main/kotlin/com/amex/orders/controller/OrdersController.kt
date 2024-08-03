@@ -17,4 +17,9 @@ class OrdersController(private val orderService: OrderService) {
     fun getOrderSummary(@PathVariable orderId: String): OrderSummary {
         return orderService.getOrderSummary(orderId)
     }
+
+    @GetMapping
+    fun getAllOrders(): List<OrderSummary> {
+        return orderService.getAllOrders()
+    }
 }

@@ -43,4 +43,8 @@ class OrderServiceImpl @Autowired constructor(
     override fun getOrderSummary(orderId: String): OrderSummary {
         return orderRepo.findById(orderId) ?: throw OrderNotFoundException(orderId)
     }
+
+    override fun getAllOrders(): List<OrderSummary> {
+        return orderRepo.findAll()
+    }
 }
