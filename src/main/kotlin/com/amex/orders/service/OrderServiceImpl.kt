@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class OrderServiceImpl() : OrderService {
+class OrderServiceImpl : OrderService {
     private val pricingMap = mapOf(
         "apple" to 0.6,
         "orange" to 0.25
@@ -31,10 +31,5 @@ class OrderServiceImpl() : OrderService {
         }
 
         return OrderSummary(orderId, orderItems, totalPrice)
-    }
-
-    private fun OrderItem.calculateCost(): Double {
-        return pricingMap[this.name.lowercase()]?.let { price -> price * this.quantity }
-            ?: throw ProductNotFoundException(this.name)
     }
 }
